@@ -60,7 +60,12 @@ app.use((err, req, res, next) => {
 
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/team-task-manager';
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error('Missing required environment variable: MONGO_URI');
+  process.exit(1);
+}
 
 mongoose
   .connect(MONGO_URI)
