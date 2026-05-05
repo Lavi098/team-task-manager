@@ -19,6 +19,10 @@ const createTask = async (req, res) => {
       return res.status(400).json({ message: 'Title and project are required' });
     }
 
+    if (typeof projectId !== 'string') {
+      return res.status(400).json({ message: 'Invalid projectId' });
+    }
+
     const project = await Project.findById(projectId);
     if (!project) return res.status(404).json({ message: 'Project not found' });
 
@@ -63,6 +67,10 @@ const getTasks = async (req, res) => {
 
     if (!projectId) {
       return res.status(400).json({ message: 'projectId query parameter is required' });
+    }
+
+    if (typeof projectId !== 'string') {
+      return res.status(400).json({ message: 'Invalid projectId' });
     }
 
     const project = await Project.findById(projectId);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import Modal from '../components/Modal';
@@ -47,7 +47,7 @@ const TasksPage = () => {
 
   const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [projRes, tasksRes] = await Promise.all([
         api.get(`/projects/${projectId}`),
@@ -60,11 +60,11 @@ const TasksPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId]);
 
   useEffect(() => {
     fetchData();
-  }, [projectId]);
+  }, [fetchData]);
 
   const isAdmin = project?.currentUserRole === 'Admin';
 

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const Modal = ({ title, onClose, children }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>

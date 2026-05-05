@@ -17,7 +17,12 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: 'Please provide name, email and password' });
     }
 
-    const existingUser = await User.findOne({ email });
+    // Ensure inputs are strings to prevent NoSQL injection
+    if (typeof email !== 'string' || typeof password !== 'string' || typeof name !== 'string') {
+      return res.status(400).json({ message: 'Invalid input types' });
+    }
+
+    const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already in use' });
     }
@@ -45,7 +50,12 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Please provide email and password' });
     }
 
-    const user = await User.findOne({ email });
+    // Ensure inputs are strings to prevent NoSQL injection
+    if (typeof email !== 'string' || typeof password !== 'string') {
+      return res.status(400).json({ message: 'Invalid input types' });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
     if (!user || !(await user.matchPassword(password))) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }

@@ -127,7 +127,11 @@ const addMember = async (req, res) => {
     const { email, memberRole } = req.body;
     if (!email) return res.status(400).json({ message: 'Email is required' });
 
-    const userToAdd = await User.findOne({ email });
+    if (typeof email !== 'string') {
+      return res.status(400).json({ message: 'Invalid email' });
+    }
+
+    const userToAdd = await User.findOne({ email: email.toLowerCase().trim() });
     if (!userToAdd) return res.status(404).json({ message: 'User not found' });
 
     const alreadyMember = project.members.some(
