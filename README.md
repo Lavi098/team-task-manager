@@ -207,9 +207,12 @@ The app will be available at `http://localhost:5173`.
 
 #### 2. Deploy Backend on Railway
 1. Go to [railway.app](https://railway.app) → New Project → Deploy from GitHub Repo
-2. Select your repository and set the **root directory** to `backend`
-3. Railway will auto-detect Node.js and run `npm start`
-4. Add these **environment variables** in Railway dashboard:
+2. Select your repository
+3. Use one of these backend settings:
+   - Recommended: set the **Root Directory** to `backend`
+   - Also supported: keep the Root Directory as the repository root; `railway.json` will install and start `backend`
+4. Railway will run the backend start command
+5. Add these **environment variables** in Railway dashboard:
    ```
    MONGO_URI=<your MongoDB Atlas URI>
    JWT_SECRET=<long random string>
@@ -217,7 +220,7 @@ The app will be available at `http://localhost:5173`.
    PORT=5000
    FRONTEND_URL=<your frontend Railway URL>
    ```
-5. Note your backend URL (e.g., `https://your-backend.up.railway.app`)
+6. Note your backend URL (e.g., `https://your-backend.up.railway.app`)
 
 #### 3. Deploy Frontend on Railway
 1. New Project → Deploy from GitHub Repo → same repo, root directory: `frontend`
